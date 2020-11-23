@@ -1,0 +1,245 @@
+
+<div *ngIf="selected">
+  <app-addservices></app-addservices>
+</div>
+
+<div fxLayout="column" fxLayoutAlign="center center" class="main-div" *ngIf="!selected">
+
+ 
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ancillary">
+    <th mat-header-cell *matHeaderCellDef> Ancillary </th>
+    <td mat-cell *matCellDef="let element"> {{element.ancillaryServices}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="specialMeal">
+    <th mat-header-cell *matHeaderCellDef> Ancillary </th>
+    <td mat-cell *matCellDef="let element"> {{element.ancillaryServices}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="seatNumber">
+    <th mat-header-cell *matHeaderCellDef> Seat Number </th>
+    <td mat-cell *matCellDef="let element"> {{element.seatNo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="passport">
+    <th mat-header-cell *matHeaderCellDef> Passport </th>
+    <td mat-cell *matCellDef="let element"> {{element.passport}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef> Address </th>
+    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dob">
+    <th mat-header-cell *matHeaderCellDef> Date Of Birth </th>
+    <td mat-cell *matCellDef="let element"> {{element.dob}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"
+  [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}"
+  (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
+</table>
+<div class="button-div">
+  <button mat-raised-button color="primary" (click)="selectPassenger()">Update</button>
+</div>
+</div>
+<br><br>
+<div *ngIf="selected">
+  <div *ngIf="status">
+    
+  </div>
+  <button mat-raised-button (click)="backToPassengerList()">Back To passenger List</button>
+</div>
+
+<!-- Color code Table -->
+<table class="center">
+    <tr>
+      <td><div class='box red'></div>&nbsp; No Special Meal </td>
+      <td><div class='box green'></div>&nbsp; SpecialMeal</td> 
+    </tr>  
+  </table>
+
+
+
+<!-- below lines are for meal preferences -->
+
+
+<div class="plane" *ngIf="!selected && !select1">
+    <div class="cockpit">
+      <h1>Please select a seat</h1>
+    </div>
+    <div class="exit exit--front fuselage">
+  
+    </div>
+    <ol class="cabin fuselage">
+      <li class="row row--1">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowOne">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+            <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--2">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowTwo">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+            <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--3">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowThree">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--4">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowFour">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--5">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowFive">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked  disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--6">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowSix">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--7">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowSeven">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--8">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowEight">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+      <li class="row row--9">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowNine">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+          </li>
+        </ol>
+      </li>
+      <li class="row row--10">
+        <ol class="seats" type="A">
+          <li class="seat" *ngFor="let seat of seatRowTen">
+            <input *ngIf="seat.specialMeal==true" type="checkbox" checked disabled value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==true" for='{{seat.seatNo}}'
+              [ngClass]="{'unchecked':seat.specialMeal==true ,'label': seat.specialMeal==false}"> {{seat.seatNo}}</label>
+  
+            <input *ngIf="seat.specialMeal==false" type="checkbox" unchecked value="{{seat.seatNo}}"
+              (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+            <label *ngIf="seat.specialMeal==false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+  
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <div class="exit exit--back fuselage">
+  
+    </div>
+  </div>

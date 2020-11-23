@@ -1,0 +1,20 @@
+<hr> <font color="#4360B5"><marquee >STAFF PLEASE LOGIN THROUGH GOOGLE</marquee></font><hr>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card>
+    <mat-toolbar fxLayoutAlign="center center" color="primary">LOGIN</mat-toolbar>
+    <form [formGroup]="adminForm" (ngSubmit)="onFormSubmit()" fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="UserName" formControlName="uname" #user>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input matInput type="password" placeholder="Password" formControlName="password" #password>
+      </mat-form-field>
+      <button mat-raised-button color="primary" >Login</button><br>
+    </form>
+    <mat-toolbar fxLayoutAlign="center center" >
+    <button   mat-raised-button color="primary" type="submit" (click)="signInWithGoogle()"><i class="fa fa-google"></i>&nbsp;Login via Google</button>
+  </mat-toolbar>
+  </mat-card>
+</div>
+<!-- (click)="submit(user.value, password.value)" -->
+

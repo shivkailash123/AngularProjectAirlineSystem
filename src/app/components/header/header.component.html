@@ -1,0 +1,96 @@
+<mat-toolbar color="primary" class="navbar">
+  <div>Airlines</div>
+ 
+  <div>
+    <!-- <span *ngIf=loggedIn() style="margin-left: 50px ; margin-bottom: 50px;">Home</span>
+        <span *ngIf=loggedIn() style="margin-left: 40px; margin-bottom: 50px;" (click)="signOut()">Signuout</span> -->
+    <table>
+      <tr>
+        <th>
+        <div *ngIf=loggedIn() class="tooltip"><img src="{{user.photoUrl}}" alt="Avatar"
+            style="width:50px;margin-top: 10px;">
+          <div class="tooltiptext tooltip-bottom">
+            {{user.firstName}}<br>
+            {{user.email}}
+          </div>
+        </div>
+        <!-- checking for admin -->
+        <div *ngIf=adminLoggedIn() class="tooltip"><i class="fa fa-user"
+          style="width:50px;margin-top: 10px;color: brown;"></i>
+          <div *ngIf=loggedIn() >{{signOut()}}</div>
+        <div class="tooltiptext tooltip-bottom">
+          Admin<br>
+          
+         
+        </div>
+      </div>
+
+      </th>
+      <th>
+        <div *ngIf=loggedIn() style="margin-bottom: 10px;">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+            </button>
+            <button mat-menu-item (click)="flightList()">
+              <span>Flight List</span>
+            </button>
+            <button mat-menu-item (click)="signOut()">
+              <span>SignOut</span>
+            </button>
+          </mat-menu>
+          </div>
+
+          <!-- for admin -->
+          <div *ngIf=adminLoggedIn() style="margin-bottom: 10px;">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                
+              </button>
+              <button mat-menu-item (click)="flightList()">
+                <span>DashBoard</span>
+              </button>
+              <button mat-menu-item (click)="adminSignOut()">
+                <span>SignOut</span>
+              </button>
+            </mat-menu>
+            </div>
+          <!-- for admin -->
+        </th>
+      </tr>
+    </table>
+
+  </div>
+
+
+
+
+
+</mat-toolbar>
+<!-- <div *ngIf=loggedIn()>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <img src="{{user.photoUrl}}" alt="Avatar" style="width:50px;">
+          <span>signOut</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+      </div>
+    </div> -->
+
+<!-- <div *ngIf!=loggedIn()></div> -->

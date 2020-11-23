@@ -1,0 +1,407 @@
+
+<!-- <div class="button-div">
+  <button mat-raised-button color="primary" (click)="selectInFlight()">InFlight</button>
+</div> -->
+
+<table class="center">
+    <tr>
+      <td><div class='box red'></div>&nbsp; Not CheckedIn </td>
+      <td><div class='box green'></div>&nbsp; CheckedIn</td> 
+       <td><div class='box yellow'></div>&nbsp; Not ChechedIn with Wheel Chair</td> 
+    </tr>
+    <tr>
+      <td><div class='box blue'></div>&nbsp; Not CheckedIn with Infant</td>
+      <td><div class='box pink'></div>&nbsp; CheckedIn with WheelChair</td>
+      <td><div class='box orange'></div>&nbsp; checkedIn with Infant</td>
+    </tr>
+    <tr>
+      <td><div class='box grey'></div>&nbsp; CheckedIn with infant and WheelChair</td>
+    </tr>
+    
+  </table>
+
+
+
+
+<div *ngIf="selected">
+  <app-inflight-detail></app-inflight-detail>
+</div>
+
+
+<div class="plane" *ngIf="!selected" >
+  <div class="cockpit">
+    <h1>Please select a seat</h1>
+  </div>
+  <div class="exit exit--front fuselage">
+
+  </div>
+  <ol class="cabin fuselage">
+    <li class="row row--1">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowOne">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked   value="{{seat.seatNo}}" 
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+          <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false"  for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+          <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+          
+          <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+          <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+          
+          <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+          <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+          <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+          <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+          
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+          <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+          
+          <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+          <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+         
+          <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+          <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+          <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--2">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowTwo">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+          <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+          <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+          <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+          <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+          <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+          <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+          <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+            (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+          <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+          
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+          <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+          
+          <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+          <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+         
+          <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+          <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+          <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--3">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowThree">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--4">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowFour">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--5">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowFive">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--6">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowSix">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--7">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowSeven">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--8">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowEight">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+    <li class="row row--9">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowNine">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+        </li>
+      </ol>
+    </li>
+    <li class="row row--10">
+      <ol class="seats" type="A">
+        <li class="seat tooltip" *ngFor="let seat of seatRowTen">
+          <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+        <span class="tooltiptext" *ngIf="seat.allocated===true">Booked</span>
+          <span class="tooltiptext" *ngIf="seat.allocated===false">NotBooked</span>
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}" 
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===false" for='{{seat.seatNo}}'> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" unchecked value="{{seat.seatNo}}"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"/>
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'yellow' : 'black' }"> {{seat.seatNo}}</label>
+
+        <input *ngIf="seat.checkedIn===false && seat.wheelchairRequired===false && seat.infants===true" type="checkbox" unchecked value="{{seat.seatNo}}" [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"
+          (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' />
+        <label *ngIf="seat.checkedIn==false && seat.wheelchairRequired===false && seat.infants===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'blue' : 'black' }"> {{seat.seatNo}}</label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'pink' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.wheelchairRequired===true && seat.infants===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'pink' : 'black' }"> {{seat.seatNo}} </label>
+        
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true  ? 'orange' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===false" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.infants===true ? 'orange' : 'black' }"> {{seat.seatNo}} </label>
+       
+        <input *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" type="checkbox" checked value="{{seat.seatNo}}"
+        (change)="checkboxClicked(seat.seatNo)" name="checkbox{{seat.seatNo}}" id='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true  ? 'grey' : 'black' }"/>
+        <label *ngIf="seat.checkedIn===true && seat.infants===true && seat.wheelchairRequired===true" for='{{seat.seatNo}}' [ngStyle]="{'background-color':seat.wheelchairRequired===true ? 'grey' : 'black' }"> {{seat.seatNo}} </label>  
+        <!-- <label for="1A" [ngClass]="{'pr': true}"> {{passenger.seatNo}}</label> -->
+
+        </li>
+      </ol>
+    </li>
+  </ol>
+  <div class="exit exit--back fuselage">
+    
+  </div>
+</div>
+
+
+  <button mat-raised-button color="primary" (click)="selectInFlight()">InFlight</button>

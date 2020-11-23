@@ -1,0 +1,22 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div" *ngIf="!status">
+  <mat-card>
+    <mat-toolbar fxLayoutAlign="center center" color="primary">Update</mat-toolbar>
+    <form (ngSubmit)="onFormSubmit()" fxLayoutAlign="stretch" fxLayout="column" class="passenger-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" name="name"  [(ngModel)]="passenger.name">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Passport</mat-label>
+        <input matInput placeholder="Passport" name="passport"  [(ngModel)]="passenger.passport">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Address" name="address"  [(ngModel)]="passenger.address">
+      </mat-form-field>
+            <button mat-raised-button color="primary" >Update</button><br>
+    </form>
+  </mat-card>
+</div>
+
+

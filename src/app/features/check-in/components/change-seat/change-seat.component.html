@@ -1,0 +1,60 @@
+<!-- <div fxLayoutAlign="center center">
+  <table>
+    <tr>
+    <td><strong>Name</strong></td>
+    <td>{{currentPassenger.name}}</td>
+  </tr>
+  <tr>
+    <td><strong>Address</strong></td>
+    <td>{{currentPassenger.address}}</td>
+  </tr>
+  <tr>
+  <td><strong>Passport</strong></td>
+    <td>{{currentPassenger.passport}}</td>
+  </tr>
+  <tr>
+    <td><strong>DOB</strong></td>
+    <td>{{currentPassenger.dob}}</td>
+  </tr>
+  <tr>
+    <td><strong>SeatNo.</strong></td>
+    <td><input type="text" style="text-transform: uppercase;" #seatNo placeholder="{{currentPassenger.seatNo}}">
+      <button (click)="changeSeat(seatNo.value)">Update</button></td>
+  </tr>
+</table>
+</div>  -->
+
+<form class="form-style-9">
+
+  <ul>
+    <li>
+      <p>Name:   {{currentPassenger.name}}</p>
+    </li>
+
+    <li>
+      <p>Address:   {{currentPassenger.address}}</p>
+    </li>
+
+    <li>
+      <p>Passport:   {{currentPassenger.passport}}</p>
+    </li>
+
+    <li>
+      <p>DOB:   {{currentPassenger.dob}}</p>
+    </li>
+   
+
+
+    <li>
+     <p>SeatNo.</p>
+     <input type="text" style="text-transform: uppercase;" #seatNo placeholder="{{currentPassenger.seatNo}}">
+    </li>
+    <li>
+      <!-- <input type="submit" (click)="addMoney()" [disabled]="(addMoneyButtonVar)" value="Add Money"
+        class="field-style field-split align-left" /> -->
+        <button (click)="changeSeat(seatNo.value)">Update</button>
+
+    </li>
+
+  </ul>
+</form>

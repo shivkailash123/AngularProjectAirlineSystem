@@ -1,0 +1,76 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="main-div"
+  *ngIf="!selected && !selected1 && !selected2 && !selected3">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="scheduleDate">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.scheduleDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef> Time </th>
+      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="source">
+      <th mat-header-cell *matHeaderCellDef> Source </th>
+      <td mat-cell *matCellDef="let element"> {{element.source}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="destination">
+      <th mat-header-cell *matHeaderCellDef> Destination </th>
+      <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"
+      [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true"
+      (mouseout)="row.hovered = false"></tr>
+  </table>
+  <table class ="center">
+    <div class="button-div">
+      <tr>
+        <td>
+          <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="selectFlight()">Manage Passengers</button>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="manageServices()">Manage
+            Ancillary Services</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="manageItems()">Manage Shopping
+            Items</button>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="manageMeals()">Manage Special
+            Meals</button>
+        </td>
+      </tr>
+    </div>
+  </table>
+</div>
+
+<div *ngIf="selected && !selected1 && !selected2 && !selected3">
+  <app-pasengersperflight></app-pasengersperflight>
+  <button mat-raised-button (click)="backToFlight()">Back To DashBoard</button>
+</div>
+<div *ngIf="selected1 && !selected && !selected2 && !selected3">
+  <app-ancillary></app-ancillary>
+  <button mat-raised-button (click)="backToFlight()">Back To DashBoard</button>
+</div>
+<div *ngIf="selected2 && !selected1 && !selected && !selected3">
+  <app-items></app-items>
+  <button mat-raised-button (click)="backToFlight()">Back To DashBoard</button>
+</div>
+<div *ngIf="!selected2 && !selected1 && !selected && selected3">
+  <app-meals></app-meals>
+  <button mat-raised-button (click)="backToFlight()">Back To DashBoard</button>
+</div>

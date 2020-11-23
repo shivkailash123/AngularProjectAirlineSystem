@@ -1,0 +1,48 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div" *ngIf="!status">
+    <mat-card>
+      <mat-toolbar fxLayoutAlign="center center" color="primary">Update</mat-toolbar>
+      <form (ngSubmit)="onFormSubmit()" fxLayoutAlign="stretch" fxLayout="column" class="passenger-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Name" name="name"  [(ngModel)]="passenger.name" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Passport</mat-label>
+          <input matInput placeholder="Passport" name="passport"  [(ngModel)]="passenger.passport " disabled>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Address" name="address"  [(ngModel)]="passenger.address" disabled>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Select AncillaryServices</mat-label>
+          <mat-select name="ancillaryServices" [(ngModel)]="passenger.ancillaryServices">
+            <mat-option *ngFor="let p of ancillaryService" [value]="p" >{{p}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>SpecialMeal</mat-label>
+          <mat-select name="specialMeal" [(ngModel)]="passenger.specialMeal">
+            <mat-option *ngFor="let p of specialMeal" [value]="p" >{{p}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select InflightShop</mat-label>
+          <mat-select name="inflightShop" [(ngModel)]="passenger.inflightShop">
+            <mat-option *ngFor="let p of inflightShop" [value]="p" >{{p}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" >Update</button><br>
+      </form>
+    </mat-card>
+  </div>
+  <div *ngIf="status">
+    <app-pasengersperflight></app-pasengersperflight>
+  </div>
+  
+  
